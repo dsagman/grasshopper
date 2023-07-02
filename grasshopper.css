@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji');
+@import url('https://fonts.googleapis.com/css2?family=VT323');
+
+body{
+    /* font-family: "Helvetica Neue", Helvetica, Arial, "Noto Emoji", sans-serif; */
+    font-family: "VT323", monospace, "Noto Emoji", sans-serif;
+    font-weight: 100;
+    color: rgb(0, 255, 106);
+    font-size: 16pt;
+    background-color: rgb(8, 8, 8);
+}
+
+#code{
+    font-family: "VT323", monospace, "Noto Emoji", sans-serif;
+    font-weight: 100;
+    color: rgb(0, 255, 106);
+    font-size: 10pt;
+    background-color: rgb(8, 8, 8);
+}
+
+h1, h2 {
+    color: yellow;
+    font-weight: 500
+}
+.figs {
+    color: yellow;
+}
+figcaption {
+    order: -1;
+}
+figure {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* for horizontal alignment */
+    align-items: center; /* for vertical alignment */          
+}
+
+
+svg {
+    border: none;
+}
+
+
+a:link {
+    color: rgb(0, 255, 106);
+}
+a:visited {
+    color: darkgreen;
+}
+a:hover {
+    color: red;
+}
+a:active {
+    color: red;
+}
+
+.annotation-note-bg {
+  fill: white;
+  /* stroke: black; */
+  stroke-width: 1px;
+  opacity: 0.8;
+  width: 500px; 
+}
+
+.annotation-note-label {
+  fill: orange;
+  font-size: 18px;
+  font-style: italic;
+    font-weight: 400;
+ 
+}
+.annotation-note-title {
+  fill: yellow;
+  font-size: 18px;
+  font-style: italic;
+    font-weight: 400;
+ 
+}

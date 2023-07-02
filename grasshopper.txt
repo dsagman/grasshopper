@@ -1,0 +1,53 @@
+How many squares can Chuck Norris cover in a single jump? All of them!
+
+A grasshopper is jumping forward in a single-axis space represented as an array(list). 
+It can cover p spaces in one jump, where p is any prime number.
+
+The grasshopper starts any distance before the initial item of the array and finishes any 
+distance after the final item of the array. The grasshopper never jumps backwards.
+
+Calculate the maximum sum of values of array items the grasshopper can land on while travelling. 
+Since there is no such thing as maximum prime number, it's entirely possible that the grasshopper 
+won't land on any item at all and cover all the distance from start to finish in a single jump.
+
+The array consists of up to 5 000 items ranging from -100 to +100, so make sure your algorithm is fast enough.
+
+For your convenience, prime numbers up to 5003 are preloaded as PRIMES.
+
+Examples:
+
+[-10, 3, 4, 5, 6] => 10: 
+
+   /\____\/
+,_/  \O0o;;
+              [-10,     3,    4,     5,     6]  
+       start - skip - skip - land - skip - land - skip - finish
+       
+4 + 6 == 10
+Grasshopper jumps:
+  - on distance 3 from start to 4
+  - on distance 2 from 4 to 6
+  - on distance 2 from 6 to finish
+[8, 2, 0, -2, -3, -2, -3, -1, 9] => 15: 
+
+   /\____\/
+,_/  \O0o;;
+                [8,     2,    0,    -2,    -3,    -2,     -3,    -1,      9]
+start - skip - land - skip - land - skip - skip - land  - skip - skip - land - skip - finish
+       
+8 + 0 - 2 + 9 = 15
+Grasshopper jumps:
+  - on distance 2 from start to 8
+  - on distance 2 from 8 to 0
+  - on distance 3 from 0 to -2
+  - on distabce 3 from -2 to 9
+  - on distance 2 from 9 to finish
+[-2, -3, -2, -3] => 0:
+
+   /\____\/
+,_/  \O0o;;
+                [-2,    -3,    -2,    -3]
+         start - skip - skip - skip - skip - finish
+     
+Grasshopper jumps:
+  - on distance 5 from start to finish  

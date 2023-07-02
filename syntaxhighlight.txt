@@ -1,0 +1,50 @@
+function max_path(d, seq) {
+const n = seq.length;
+let max_sum = [...seq]; // Copy of seq array to avoid overwriting
+let best_path = Array.from({ length: n }, (_, i) => [i]); // Initialize an array for storing paths
+
+for (let node = n - 1; node >= 0; node--) {
+    if (d[node].length > 0) {
+    let max_val = Number.NEGATIVE_INFINITY;
+    let max_node = -1;
+    for (let next_node of d[node]) {
+        if (max_sum[next_node] > max_val) {
+        max_val = max_sum[next_node];
+        max_node = next_node;
+        }
+    }
+    max_sum[node] = max_val + seq[node];
+    best_path[node] = [node].concat(best_path[max_node]);
+    }
+}
+
+let max_sum_start = Math.max(...max_sum);  // maximum sum among all starting nodes
+let start_node = max_sum.indexOf(max_sum_start);  // starting node for the maximum sum
+let path = best_path[start_node];  // path corresponding to the maximum sum
+return [max_sum_start, path];
+}      
+
+<span style='color:#508050; font-weight:bold; '>function</span> max_path<span style='color:#808030; '>(</span>d<span style='color:#808030; '>,</span> seq<span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+<span style='color:#508050; font-weight:bold; '>const</span> n <span style='color:#808030; '>=</span> seq<span style='color:#808030; '>.</span><span style='color:#508050; font-weight:bold; '>length</span><span style='color:#800080; '>;</span>
+<span style='color:#508050; font-weight:bold; '>let</span> max_sum <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#808030; '>.</span><span style='color:#808030; '>.</span><span style='color:#808030; '>.</span>seq<span style='color:#808030; '>]</span><span style='color:#800080; '>;</span> <span style='color:#b96969; '>// Copy of seq array to avoid overwriting</span>
+<span style='color:#508050; font-weight:bold; '>let</span> best_path <span style='color:#808030; '>=</span> Array<span style='color:#808030; '>.</span>from<span style='color:#808030; '>(</span><span style='color:#800080; '>{</span> <span style='color:#508050; font-weight:bold; '>length</span><span style='color:#800080; '>:</span> n <span style='color:#800080; '>}</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>(</span>_<span style='color:#808030; '>,</span> i<span style='color:#808030; '>)</span> <span style='color:#808030; '>=</span><span style='color:#808030; '>></span> <span style='color:#808030; '>[</span>i<span style='color:#808030; '>]</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span> <span style='color:#b96969; '>// Initialize an array for storing paths</span>
+<span style='color:#508050; font-weight:bold; '>for</span> <span style='color:#808030; '>(</span><span style='color:#508050; font-weight:bold; '>let</span> node <span style='color:#808030; '>=</span> n <span style='color:#808030; '>-</span> <span style='color:#778c77; '>1</span><span style='color:#800080; '>;</span> node <span style='color:#808030; '>>=</span> <span style='color:#778c77; '>0</span><span style='color:#800080; '>;</span> node<span style='color:#808030; '>--</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+<span style='color:#508050; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>d<span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span><span style='color:#808030; '>.</span><span style='color:#508050; font-weight:bold; '>length</span> <span style='color:#808030; '>></span> <span style='color:#778c77; '>0</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+<span style='color:#508050; font-weight:bold; '>let</span> max_val <span style='color:#808030; '>=</span> Number<span style='color:#808030; '>.</span>NEGATIVE_INFINITY<span style='color:#800080; '>;</span>
+<span style='color:#508050; font-weight:bold; '>let</span> max_node <span style='color:#808030; '>=</span> <span style='color:#808030; '>-</span><span style='color:#778c77; '>1</span><span style='color:#800080; '>;</span>
+<span style='color:#508050; font-weight:bold; '>for</span> <span style='color:#808030; '>(</span><span style='color:#508050; font-weight:bold; '>let</span> next_node of d<span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+<span style='color:#508050; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>max_sum<span style='color:#808030; '>[</span>next_node<span style='color:#808030; '>]</span> <span style='color:#808030; '>></span> max_val<span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+max_val <span style='color:#808030; '>=</span> max_sum<span style='color:#808030; '>[</span>next_node<span style='color:#808030; '>]</span><span style='color:#800080; '>;</span>
+max_node <span style='color:#808030; '>=</span> next_node<span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+<span style='color:#800080; '>}</span>
+max_sum<span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span> <span style='color:#808030; '>=</span> max_val <span style='color:#808030; '>+</span> seq<span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span><span style='color:#800080; '>;</span>
+best_path<span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span> <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span>node<span style='color:#808030; '>]</span><span style='color:#808030; '>.</span><span style='color:#508050; font-weight:bold; '>concat</span><span style='color:#808030; '>(</span>best_path<span style='color:#808030; '>[</span>max_node<span style='color:#808030; '>]</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+<span style='color:#800080; '>}</span>
+<span style='color:#508050; font-weight:bold; '>let</span> max_sum_start <span style='color:#808030; '>=</span> Math<span style='color:#808030; '>.</span><span style='color:#508050; font-weight:bold; '>max</span><span style='color:#808030; '>(</span><span style='color:#808030; '>.</span><span style='color:#808030; '>.</span><span style='color:#808030; '>.</span>max_sum<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span> <span style='color:#b96969; '>// maximum sum among all starting nodes</span>
+<span style='color:#508050; font-weight:bold; '>let</span> start_node <span style='color:#808030; '>=</span> max_sum<span style='color:#808030; '>.</span><span style='color:#508050; font-weight:bold; '>indexOf</span><span style='color:#808030; '>(</span>max_sum_start<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span> <span style='color:#b96969; '>// starting node for the maximum sum</span>
+<span style='color:#508050; font-weight:bold; '>let</span> path <span style='color:#808030; '>=</span> best_path<span style='color:#808030; '>[</span>start_node<span style='color:#808030; '>]</span><span style='color:#800080; '>;</span> <span style='color:#b96969; '>// path corresponding to the maximum sum</span>
+<span style='color:#508050; font-weight:bold; '>return</span> <span style='color:#808030; '>[</span>max_sum_start<span style='color:#808030; '>,</span> path<span style='color:#808030; '>]</span><span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+<!--Created using ToHTML.com on 2023-07-01 17:10:54 UTC -->
