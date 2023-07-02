@@ -3,7 +3,7 @@
 // given in the codewars.com problem
 function generatePrimes(n) {
   const primes = [2];
-  for(let i = 3; i <= n; i+=2) {
+  for (let i = 3; i <= n; i += 2) {
     if (primes.every(prime => i % prime !== 0)) {
       primes.push(i);
     }
@@ -15,8 +15,8 @@ function generatePrimes(n) {
 // used in chekcing if path is valid in visualization
 // numbers are small enough that this terrible code is fine
 function isPrime(num) {
-  for(let i = 2; i * i <= num; i++)
-    if(num % i === 0) return false; 
+  for (let i = 2; i * i <= num; i++)
+    if (num % i === 0) return false;
   return num > 1;
 }
 
@@ -33,18 +33,33 @@ function computeSum(seq, path) {
   return sum;
 }
 
+// helper function to count the number of elements
+// in the DAG nested array
+function nestedArrSize(arr) {
+  let count = 0;
+  arr.forEach(element => {
+      if (Array.isArray(element)) {
+          count += nestedArrSize(element);
+      } else {
+          count++;
+      }
+  });
+  return count;
+}
+
+
 // helper function for linking nodes with path arcs
 // in visualization
 function linkArc(path) {
   if (path === undefined || path.length < 2) {
     return [];
   }
-  let dArcSize = Math.max(...path) + 1;
-  const dArc = Array(dArcSize).fill().map(() => []);
+  let dSize = Math.max(...path) + 1;
+  const d = Array(dSize).fill().map(() => []);
   for (let i = 0; i < path.length - 1; i++) {
-   dArc[path[i]].push(path[i+1]);
+    d[path[i]].push(path[i + 1]);
   }
-  return dArc;
+  return d;
 }
 
 // helper function to show what linking every node
@@ -55,8 +70,9 @@ function linkAll(seq) {
     for (let j = i + 1; j < seq.length; j++) {
       d[i].push(j);
     }
-    return d;
   }
+  return d;
+}
 
 // The directed acyclic graph generator 
 // used in solving the problem via finding
@@ -68,10 +84,12 @@ function dag(seq) {
   for (let i = 0; i < seq.length; i++) {
     PRIMES.filter(k => k < seq.length - i)
       .forEach(j => {
-        d[i].push(i+j);
+        d[i].push(i + j);
       });
     d[i].push(seq.length);  // add a terminal node
   }
+  console.log("seq", seq);
+  console.log("dag size", nestedArrSize(d));
   return d;
 }
 
@@ -79,7 +97,7 @@ function dag(seq) {
 function max_path(d, seq) {
   const n = seq.length;
   let max_sum = [...seq]; // Copy of seq array to avoid overwriting
-  let best_path = Array.from({length: n}, (_, i) => [i]); // Initialize an array for storing paths
+  let best_path = Array.from({ length: n }, (_, i) => [i]); // Initialize an array for storing paths
 
   for (let node = n - 1; node >= 0; node--) {
     if (d[node].length > 0) {
@@ -102,7 +120,7 @@ function max_path(d, seq) {
   // console.log("Inside The maximum sum is " + max_sum_start);
   // console.log("Inside The path is " + path);
   return [max_sum_start, path];
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 // The prime_grasshopper function
 // this is how the codewars.com problem is solved

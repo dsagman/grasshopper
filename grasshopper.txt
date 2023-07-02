@@ -1,3 +1,5 @@
+Instructions from codewars.com
+
 How many squares can Chuck Norris cover in a single jump? All of them!
 
 A grasshopper is jumping forward in a single-axis space represented as an array(list). 
