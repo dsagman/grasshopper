@@ -1,5 +1,8 @@
+// visualization code for grasshopper problem
+// uses d3.js and d3-annotation.js
 
 function clearSVG(id) {
+  // clear the svg with the given id
   const svg = d3.select("#" + id);
   svg.selectAll("*").remove();
 }
@@ -25,7 +28,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
 
   path = path.sort((a, b) => a - b); // path can get unsorted with clicking
 
-  // whether to show the directed acyclic graph or only the user selected path
+  // show the directed acyclic graph, the user selected path, or all edges
   let graph;
   if (edgeMethod === "all") {
     graph = linkAll(seq);
@@ -126,22 +129,6 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
         return path.includes(d.id) ? (pathIsPrimeApart ? nodeColor : errorColor) : nodeEmpty;
       })
       .style("stroke", nodeColor)
-  // } else if (style === 'circle') {
-  //   node = svg.append("g")
-  //     .selectAll("circle")
-  //     .data(nodeData)
-  //     .enter()
-  //     .append("circle")
-  //     .attr("r", 10)
-  //     .attr("transform", (d, i) => { // transform circle's position to circular layout
-  //       let angle = angleScale(i);
-  //       return `translate(${width / 2 + Math.cos(angle) * radius}, ${height / 2 + Math.sin(angle) * radius})`;
-  //     })
-  //     .style("fill", function (d) {
-  //       return path.includes(d.id) ? (pathIsPrimeApart ? nodeColor : errorColor) : nodeEmpty;
-  //     })
-  //     .style("stroke", nodeColor)
-  // }
 } else if (style === 'circle') {
     node = svg.append("g")
       .selectAll("circle")
@@ -197,12 +184,6 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
       .attr("text-anchor", "middle")
       .attr("fill", "yellow");
   }
-
-
-  // .attr("d", arc) // use the arc generator
-  // Offset the link coordinates by the center of the SVG
-  const xOffset = width / 2,
-    yOffset = height / 2;
 
   let link;
   if (style === 'default') {
@@ -320,11 +301,4 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
     drawGraph(seq, path, edgeMethod, id, showEnd, goalSum, style);
   }
 
-  // not using. but not ready to delete.
-  // function neighboring(a, b) {
-  //   return linkData.some(
-  //     (d) =>
-  //       (d.source === a && d.target === b) || (d.source === b && d.target === a)
-  //   );
-  // }
 }
