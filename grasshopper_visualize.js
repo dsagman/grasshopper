@@ -5,6 +5,13 @@ function clearSVG(id) {
 }
 
 function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default') {
+  // seq: the sequence of numbers
+  // path: the path of numbers to highlight
+  // edgeMethod: "path" or "dag" or "all"
+  // id: the id of the svg element
+  // showEnd: whether to show the end node
+  // goalSum: the goal sum
+  // style: 'default' or 'circle'
   const nodeColor = "yellow";
   const nodeEmpty = "#000000";
   const errorColor = "red";

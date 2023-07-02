@@ -18,6 +18,20 @@ body{
     background-color: rgb(8, 8, 8);
 }
 
+label, input, button, option, select, textarea, optgroup {
+    font-family: "VT323", monospace, "Noto Emoji", sans-serif;
+    font-weight: 100;
+    color: "yellow";
+    font-size: 16pt;
+    background-color: rgb(8, 8, 8);
+    border-color: rgb(255, 183, 0); /* Replace with your preferred button outline color */
+}
+
+button, option, select, textarea, optgroup {
+    background-color: rgb(8, 8, 8);
+    color: rgb(255, 183, 0)
+}
+
 h1, h2 {
     color: yellow;
     font-weight: 500
