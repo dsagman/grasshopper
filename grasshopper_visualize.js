@@ -24,7 +24,8 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   const height = 220;
   const midLine = height / 2.5;
   const margin = { top: 0, right: 12, bottom: 0, left: 12 };
-  let arc, radius, angleScale;
+  let arc; // not using arc, not ready to delete yet
+  let radius, angleScale;
 
   path = path.sort((a, b) => a - b); // path can get unsorted with clicking
 
@@ -101,7 +102,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
     }))
   );
 
-  // not using nodeY, may use it, don't delete yet
+  // not using nodeY or linkY, may use it, don't delete yet
   const nodeY = (d) =>
     path.includes(d.id) ? midLine - 30 : midLine + 30;
   const linkY = (d) =>
@@ -212,17 +213,14 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   } else if (style === 'circle') {
     const lineGenerator = d3.line()
     .x(d => d.x)
-    .y(d => d.y);
-
-  link = svg
-    .append("g")
+      .y(d => d.y)
+    link = svg
+      .append("g") 
     .selectAll("path")
     .data(linkData)
     .enter()
     .append("path")
     .attr("d", d => lineGenerator([d.source, d.target])) // Draw a line from source to target
-    .style("fill", "none")
-    .style("stroke", "blue");
 }
   link
     .style("stroke", function (d) {
@@ -245,6 +243,10 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
     })
     .attr("class", "link")
     .attr("marker-end", "url(#end)");
+  
+  link
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
 
   // don't lable for circle layout
   if (style === 'default') {

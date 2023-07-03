@@ -29,7 +29,17 @@ label, input, button, option, select, textarea, optgroup {
 
 button, option, select, textarea, optgroup {
     background-color: rgb(8, 8, 8);
-    color: rgb(255, 183, 0)
+    color: rgb(255, 183, 0);
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    cursor: crosshair;
+    outline: none;
+    transition: 0.2s all;
+}
+button:active {
+    transform: scale(0.58);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
 }
 
 h1, h2 {

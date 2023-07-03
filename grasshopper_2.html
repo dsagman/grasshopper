@@ -39,7 +39,8 @@
     <p>Let's use n to be the number of lily pads. The above method would take
         n factorial (n!) steps. That's a lot of steps. The technical term for this
         is <em>brute force</em>. For example, if we had 10 lily pads,
-        that would be 3,628,800 steps. If we could do 10,000,000 steps per second,
+        that would be 3,628,800 steps. If we could do 10,000,000 steps per second 
+        (not unreasonable on a even a smart phone in 2023),
         that would take a third of a second.</p>
     <figure class="figs">
         <figcaption>Figure 4: Brute force 10 nodes</figcaption>
@@ -54,8 +55,8 @@
             drawGraph(seq, path, edgeMathod, "fig4", showEnd, goalSum, style)
         </script>
     </figure>
-    <p>Not bad! But if we had 20 lily pads, that
-        would be 2,432,902,008,176,640,000 steps. That's 2.4 x 10<sup>18</sup> steps.
+    <p>But if we had 20 lily pads, that
+        would be 2,432,902,008,176,640,000 steps.
         If we could do 10,000,000,000 steps per second, that would take 2.4 x 10<sup>8</sup> seconds.
         That's 7 and a half years! And we haven't even filtered out the invalid paths.
     </p>
@@ -72,9 +73,9 @@
             drawGraph(seq, path, edgeMathod, "fig5", showEnd, goalSum, style)
         </script>
     </figure>
-    <p>Instead, let's create a data structure called a Directed Acyclic Graph (DAG).
+    <p>Let's create a data structure called a Directed Acyclic Graph (DAG).
         A graph is a set of nodes and edges, basically what we have already been using.
-        Directed means that all the edges have a direction. In our case, the direction is from left to right.
+        Directed means that all the edges have a, er, direction. In our case, the direction is from left to right.
         Acyclic means that there are no loops. In our case, that means that we can't go back to a lily pad we have
         already visited.
     </p>
@@ -126,30 +127,15 @@
     <span style='color:#800080; '>}</span>        </span>
         </pre>
     </div>
-    <p>OK, let's go back and solve the "easy" one. Note that you
-        can mouse over the nodes to see the solve path more clearly.
+    <p>If you are familiar with "dynamic programming" that's what this is. We
+        keep track of the best path and sum as we go. We start from the left 
+        and work backwards. Using a technique called "memoization" we only have
+        to compute the sum for each node once. This is plus the DAG (d) is how we get the speedup.
     </p>
-    <figure class="figs">
-        <figcaption>Figure 7: An easy one solved!</figcaption>
-        <svg id="fig7"></svg>
-        <script>
-            seq = [-71, -52, -62, -4, -57, -76, -24, 72, 46, 5, 3, 58,
-            -40, 6, 89, -91, -49, 2, -51, 22, 96, -22, 29, 55,
-            -37, 53, 77, -98, 67, 24, 21, -74, 24, 14, 54, 58,
-                0, 32, -30, -25, -88, -19, -70, 19]
-            edgeMathod = "dag";
-            showEnd = true;
-            [goalSum, path] = prime_grasshopper(seq);
-            style = "default";
-            drawGraph(seq, path, edgeMathod, "fig7", showEnd, goalSum, style)
-        </script>
-    </figure>
-    <p>Note: you may have spotted the "end" node, which wasn't there before.
-        We need that new "terminal" node to make the algorithm work correctly
-        because the grasshopper needs a node that every other node points to
-        so that there's always a path.
+    <p>(You may have expected recursion, but we don't need recursion for 
+        dynamic programming.)
     </p>
-<a href="./grasshopper_3.html">Let's keep exploring. Click here.</a>
+<a href="./grasshopper_3.html">Let's go solve! Click here.</a>
 </body>
 
 </html>
