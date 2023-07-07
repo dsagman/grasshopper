@@ -20,10 +20,11 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   const errorColor = "red";
   const edgeNotSelectedColor = "lightgray";
   const edgeSelectedColor = "orange";
-  const width = Math.min(seq.length * 75, 1000);
-  const height = 220;
+  const nodeRadius = 15;
+  const width = Math.max(300, Math.min(seq.length * nodeRadius * 4, 1000));
+  const height = style === 'circle' ? Math.min(width, 600) : 220;
   const midLine = height / 2.5;
-  const margin = { top: 0, right: 12, bottom: 0, left: 12 };
+  const margin = { top: 0, right: nodeRadius+1, bottom: 0, left: nodeRadius+1 };
   let arc; // not using arc, not ready to delete yet
   let radius, angleScale;
 
@@ -103,12 +104,12 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   );
 
   // not using nodeY or linkY, may use it, don't delete yet
-  const nodeY = (d) =>
-    path.includes(d.id) ? midLine - 30 : midLine + 30;
-  const linkY = (d) =>
-    path.includes(d.source.id) && path.includes(d.target.id)
-      ? midLine - 30
-      : midLine + 30;
+  // const nodeY = (d) =>
+  //   path.includes(d.id) ? midLine - 30 : midLine + 30;
+  // const linkY = (d) =>
+  //   path.includes(d.source.id) && path.includes(d.target.id)
+  //     ? midLine - 30
+  //     : midLine + 30;
 
   const xScale = d3
     .scalePoint()
@@ -123,20 +124,23 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
       .data(nodeData)
       .enter()
       .append("circle")
-      .attr("r", 10)
-      .attr("cx", (d) => xScale(d.id))
+      .attr("r", nodeRadius)
+      .attr("cx", function (d) {
+        d.x = xScale(d.id)
+        return d.x
+      })
       .attr("cy", midLine)
       .style("fill", function (d) {
         return path.includes(d.id) ? (pathIsPrimeApart ? nodeColor : errorColor) : nodeEmpty;
       })
       .style("stroke", nodeColor)
-} else if (style === 'circle') {
+  } else if (style === 'circle') {
     node = svg.append("g")
       .selectAll("circle")
       .data(nodeData)
       .enter()
       .append("circle")
-      .attr("r", 10)
+      .attr("r", nodeRadius)
       .attr("cx", function (d, i) { // calculate and save circular positions
         d.x = width / 2 + Math.cos(angleScale(i)) * radius;
         return d.x;
@@ -211,17 +215,30 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
       })
       .style("fill", "none");
   } else if (style === 'circle') {
-    const lineGenerator = d3.line()
-    .x(d => d.x)
+    // link = svg.append("g")
+    //   .selectAll("path")
+    //   .data(linkData)
+    //   .enter()
+    //   .append("path")
+    //   .attr("d", d => {
+    //     const dx = (d.target.x - d.source.x);
+    //     const dy = (d.target.y - d.source.y);
+    //     const dr = Math.sqrt(dx * dx + dy * dy);
+    //     return `M ${d.source.x},${d.source.y} A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+    //   })
+    //     .style("fill", "none"); // Draw a curved line from source to target
+    const lineGenerator = d3
+      .line()
+      .x(d => d.x)
       .y(d => d.y)
     link = svg
-      .append("g") 
-    .selectAll("path")
-    .data(linkData)
-    .enter()
-    .append("path")
-    .attr("d", d => lineGenerator([d.source, d.target])) // Draw a line from source to target
-}
+      .append("g")
+      .selectAll("path")
+      .data(linkData)
+      .enter()
+      .append("path")
+      .attr("d", d => lineGenerator([d.source, d.target])) // Draw a line from source to target
+  }
   link
     .style("stroke", function (d) {
       let sourceIndex = path.indexOf(d.source.id);
@@ -243,12 +260,12 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
     })
     .attr("class", "link")
     .attr("marker-end", "url(#end)");
-  
+
   link
     .on("mouseover", mouseover)
     .on("mouseout", mouseout)
 
-  // don't lable for circle layout
+  // don't annotate label for circle layout
   if (style === 'default') {
     let mySum = computeSum(seq, path);
     let gotIt = (goalSum == mySum) ? true : false;
@@ -270,6 +287,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
         // dy: height-30,
         // dx: 0,
       },
+
     ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
@@ -286,10 +304,34 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
         Math.abs(sourceIndex - targetIndex) === 1;
       return (inPath) ? 1 : 0.1;
     });
+    console.log("d: ", d);
+    if (d.id !== undefined) {
+      // append an annotation for the node
+      const annotationsNode = [
+        {
+          note: {
+            title: `Index: ${d.id}`,
+            label: `Value: ${d.value}`,
+            align: d.id === 0 ? "left" : (d.id > seq.length -1 ? "right" : "middle"),
+          },
+          x: d.x,
+          y: d.y,
+          dy: 0,
+          dx: 0
+        }
+      ];
+
+      const makeNodeAnnotations = d3.annotation().annotations(annotationsNode);
+
+      svg.append("g")
+        .attr("id", 'nodeAnnotation')
+        .call(makeNodeAnnotations);
+    }
   }
 
   function mouseout() {
     link.style("opacity", 1);
+    d3.select(`#nodeAnnotation`).remove();
   }
 
   function click(event, d) {

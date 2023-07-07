@@ -27,7 +27,7 @@ label, input, button, option, select, textarea, optgroup {
     border-color: rgb(255, 183, 0); /* Replace with your preferred button outline color */
 }
 
-button, option, select, textarea, optgroup {
+button, input, option, select, textarea, optgroup {
     background-color: rgb(8, 8, 8);
     color: rgb(255, 183, 0);
     box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);

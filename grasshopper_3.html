@@ -37,7 +37,7 @@
         because the grasshopper needs a node that every other node points to
         so that there's always a path.
     </p>
-    <p>Feel free to explore more. Here's a bunch of samples to start with or you can 
+    <p>Feel free to explore more. Here's a bunch of samples to start with or you can
         make your own! &#129431;</p>
     <figure class="figs">
         <figcaption>Figure 8: Grasshopper &#129431; Playground</figcaption>
@@ -68,10 +68,12 @@
         <p>or</p>
         <label for="custom-sequence">Enter a sequence of your own (comma separated):</label>
         <input type="text" id="custom-sequence" style="width: 300px;">
+        <p id="error-message" style="color:red;"></p>
         <p></p>
         <button id="toggle-style">How about a circle?<br>click me!</button>
         <script>
-            let style = "default";
+            // let style = "default";
+            let style;
             let edgeMathod;
             let showEnd;
             const seq10p = [100].concat(new Array(166).fill(-1)).concat([100]);
@@ -95,12 +97,19 @@
             });
 
             document.getElementById("custom-sequence").addEventListener("input", function (event) {
-                let seq = event.target.value.split(',').map(Number);
-                updateGraphAndInfo(seq);
+                let seq = event.target.value.split(',').map(str => str.trim());
+
+                if (seq.every(val => !isNaN(val))) {
+                    seq = seq.map(Number);
+                    updateGraphAndInfo(seq);
+                    document.getElementById("error-message").innerText = ""; // Clear error message
+                } else {
+                    document.getElementById("error-message").innerText = "Invalid input. Please input only numbers separated by commas.";
+                }
             });
 
             document.getElementById("toggle-style").addEventListener("click", function () {
-                style = style === 'default' ? 'circle' : 'default';
+                style = style === 'circle' ? 'default' : 'circle';
                 let seqSelect = document.getElementById("predefined-sequences");
                 let seq;
                 if (seqSelect.value) {
@@ -122,15 +131,11 @@
             updateGraphAndInfo(predefinedSequences['seq1']);
         </script>
     </figure>
-    <!-- <p>Here's another way to view the lily pads and edges of the graph. 
-        I would like to say that there's stuff going on here about number theory,
-        fields, rings, modular arithmetic, but that would be fibbing.
-        Honestly, it just looks neat. Click the different options.
-        <figure class="figs">
-            <figcaption>Figure 9: A circle view.</figcaption>
-          
-        </figure>
-    </p> -->
+
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
 </body>
 
 </html>

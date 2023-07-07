@@ -95,12 +95,15 @@ function max_path(d, seq) {
   const n = seq.length;
   let max_sum = [...seq]; // Copy of seq array to avoid overwriting
   let best_path = Array.from({ length: n }, (_, i) => [i]); // Initialize an array for storing paths
-
+  let logPath = [];
+  
   for (let node = n - 1; node >= 0; node--) {
+    console.log("node", node);
     if (d[node].length > 0) {
       let max_val = Number.NEGATIVE_INFINITY;
       let max_node = -1;
       for (let next_node of d[node]) {
+        console.log("max node", max_node);
         if (max_sum[next_node] > max_val) {
           max_val = max_sum[next_node];
           max_node = next_node;
@@ -114,8 +117,10 @@ function max_path(d, seq) {
   let max_sum_start = Math.max(...max_sum);  // maximum sum among all starting nodes
   let start_node = max_sum.indexOf(max_sum_start);  // starting node for the maximum sum
   let path = best_path[start_node];  // path corresponding to the maximum sum
-  // console.log("Inside The maximum sum is " + max_sum_start);
-  // console.log("Inside The path is " + path);
+  console.log("Inside The maximum sum is " + max_sum_start);
+  console.log("Inside The path is " + path);
+  console.log("best path is " + best_path);
+  console.log("max sum is " + max_sum);
   return [max_sum_start, path];
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
