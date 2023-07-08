@@ -1,13 +1,36 @@
 // visualization code for grasshopper problem
 // uses d3.js and d3-annotation.js
 
+function delay(duration) {
+  // used for animation
+  return new Promise(resolve => setTimeout(resolve, duration));
+}
+
 function clearSVG(id) {
   // clear the svg with the given id
   const svg = d3.select("#" + id);
   svg.selectAll("*").remove();
 }
 
-function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default') {
+function animateDrawPathLog(seq, pathLog, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default', tDelay = 10) {
+  // animate the solving algorithm for primeGrasshopper
+  for (let i = 0; i < pathLog.length; i++) {
+    animateDrawGraph(seq, pathLog[i], edgeMethod, id, showEnd, goalSum, style, tDelay)
+  }
+}
+
+async function animateDrawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default', tDelay = 100) {
+  for (let i = 1; i <= path.length; i++) {
+    await delay(tDelay); // delay for animation
+    clearSVG(id);
+    drawGraph(seq, path.slice(0, i), edgeMethod, id, showEnd, goalSum, style);
+  }
+
+}
+
+function drawGraph(seq, path, edgeMethod = "path", id,
+  showEnd = false, goalSum, style = 'default',
+  tDelay = 100) {
   // seq: the sequence of numbers
   // path: the path of numbers to highlight
   // edgeMethod: "path" or "dag" or "all"
@@ -15,6 +38,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   // showEnd: whether to show the end node
   // goalSum: the goal sum
   // style: 'default' or 'circle'
+  // tDelay: the delay for animation
   const nodeColor = "yellow";
   const nodeEmpty = "#000000";
   const errorColor = "red";
@@ -24,7 +48,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   const width = Math.max(300, Math.min(seq.length * nodeRadius * 4, 1000));
   const height = style === 'circle' ? Math.min(width, 600) : 220;
   const midLine = height / 2.5;
-  const margin = { top: 0, right: nodeRadius+1, bottom: 0, left: nodeRadius+1 };
+  const margin = { top: 0, right: nodeRadius + 1, bottom: 0, left: nodeRadius + 1 };
   let arc; // not using arc, not ready to delete yet
   let radius, angleScale;
 
@@ -102,14 +126,6 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
       target: nodeData[target],
     }))
   );
-
-  // not using nodeY or linkY, may use it, don't delete yet
-  // const nodeY = (d) =>
-  //   path.includes(d.id) ? midLine - 30 : midLine + 30;
-  // const linkY = (d) =>
-  //   path.includes(d.source.id) && path.includes(d.target.id)
-  //     ? midLine - 30
-  //     : midLine + 30;
 
   const xScale = d3
     .scalePoint()
@@ -304,7 +320,6 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
         Math.abs(sourceIndex - targetIndex) === 1;
       return (inPath) ? 1 : 0.1;
     });
-    console.log("d: ", d);
     if (d.id !== undefined) {
       // append an annotation for the node
       const annotationsNode = [
@@ -312,7 +327,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
           note: {
             title: `Index: ${d.id}`,
             label: `Value: ${d.value}`,
-            align: d.id === 0 ? "left" : (d.id > seq.length -1 ? "right" : "middle"),
+            align: d.id === 0 ? "left" : (d.id > seq.length - 1 ? "right" : "middle"),
           },
           x: d.x,
           y: d.y,
@@ -332,6 +347,7 @@ function drawGraph(seq, path, edgeMethod = "path", id, showEnd = false, goalSum,
   function mouseout() {
     link.style("opacity", 1);
     d3.select(`#nodeAnnotation`).remove();
+    animateDrawGraph(seq, path, edgeMethod, id, showEnd, goalSum, style, tDelay);
   }
 
   function click(event, d) {

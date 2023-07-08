@@ -15,20 +15,29 @@
     <h1>The Grasshopper &#129431; and the Lily Pads &#x1FAB7;</h1>
     <h2>Page 3</h2>
     <figure class="figs">
-        <figcaption>Figure 7: An easy one solved!</figcaption>
+        <figcaption>Figure 7: An easy one solved! <br> Let's see the algorithm work!</figcaption>
         <svg id="fig7"></svg>
-        <script>
-            seq = [-71, -52, -62, -4, -57, -76, -24, 72, 46, 5, 3, 58,
-            -40, 6, 89, -91, -49, 2, -51, 22, 96, -22, 29, 55,
-            -37, 53, 77, -98, 67, 24, 21, -74, 24, 14, 54, 58,
-                0, 32, -30, -25, -88, -19, -70, 19]
-            edgeMathod = "dag";
-            showEnd = true;
-            [goalSum, path] = prime_grasshopper(seq);
-            style = "default";
-            drawGraph(seq, path, edgeMathod, "fig7", showEnd, goalSum, style)
+        <button id="runAnimation">Run Solve Animation Again</button>
+        <script>            
+            function runAnimation() {
+                seq = [-71, -52, -62, -4, -57, -76, -24, 72, 46, 5, 3, 58,
+                    -40, 6, 89, -91, -49, 2, -51, 22, 96, -22, 29, 55,
+                    -37, 53, 77, -98, 67, 24, 21, -74, 24, 14, 54, 58,
+                    0, 32, -30, -25, -88, -19, -70, 19];
+                edgeMethod = "dag";
+                showEnd = true;
+                style = "default";
+                [goalSum, path, pathLog] = prime_grasshopper(seq);
+                speed = 1;
+                animateDrawPathLog(seq, pathLog, edgeMethod, "fig7", showEnd, goalSum, style, speed);
+            }
+
+            runAnimation();
+    
+            document.getElementById('runAnimation').addEventListener('click', runAnimation);
         </script>
     </figure>
+    
     <p>You
         can mouse over the nodes to see the solve path more clearly.
     </p>
@@ -74,7 +83,7 @@
         <script>
             // let style = "default";
             let style;
-            let edgeMathod;
+            let edgeMethod;
             let showEnd;
             const seq10p = [100].concat(new Array(166).fill(-1)).concat([100]);
             const seq11p = [100].concat(new Array(442).fill(-1)).concat([100]);
@@ -121,21 +130,19 @@
             });
 
             function updateGraphAndInfo(seq) {
-                [goalSum, path] = prime_grasshopper(seq);
-                edgeMathod = "dag";
+                [goalSum, path, pathLog] = prime_grasshopper(seq);
+                edgeMethod = "dag";
                 showEnd = true;
                 // style = "default";
                 clearSVG("fig8");
-                drawGraph(seq, path, edgeMathod, "fig8", showEnd, goalSum, style);
+                drawGraph(seq, path, edgeMethod, "fig8", showEnd, goalSum, style);
             }
             updateGraphAndInfo(predefinedSequences['seq1']);
         </script>
     </figure>
+    <p>If you'd like the source code. It's available here:<a href="https://github.com/dsagman/grasshopper">https://github.com/dsagman/grasshopper</a></p>
+    <p><br><br><br><br></p>
 
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
 </body>
 
 </html>

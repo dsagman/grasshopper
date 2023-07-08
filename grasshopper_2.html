@@ -26,7 +26,7 @@
             path = []
             edgeMathod = "path";
             showEnd = false;
-            [goalSum, _] = prime_grasshopper(seq);
+            [goalSum, _, _] = prime_grasshopper(seq);
             style = "default";
             drawGraph(seq, path, edgeMathod, "fig3", showEnd, goalSum, style)
         </script>
@@ -50,7 +50,7 @@
             path = []
             edgeMathod = "all";
             showEnd = false;
-            [goalSum, _] = prime_grasshopper(seq);
+            [goalSum, _, _] = prime_grasshopper(seq);
             style = "default";
             drawGraph(seq, path, edgeMathod, "fig4", showEnd, goalSum, style)
         </script>
@@ -68,7 +68,7 @@
             path = []
             edgeMathod = "all";
             showEnd = false;
-            [goalSum,] = prime_grasshopper(seq);
+            [goalSum, _, _] = prime_grasshopper(seq);
             style = "default";
             drawGraph(seq, path, edgeMathod, "fig5", showEnd, goalSum, style)
         </script>
@@ -87,7 +87,7 @@
             // path = []
             edgeMathod = "dag";
             showEnd = true;
-            [goalSum, path] = prime_grasshopper(seq);
+            [goalSum, path, _] = prime_grasshopper(seq);
             style = "default";
             drawGraph(seq, path, edgeMathod, "fig6", showEnd, goalSum, style)
         </script>
@@ -128,18 +128,16 @@
         </pre>
     </div>
     <p>If you are familiar with "dynamic programming" that's what this is. We
-        keep track of the best path and sum as we go. We start from the left 
+        keep track of the best path and sum as we go. We start from the right 
         and work backwards. Using a technique called "memoization" we only have
         to compute the sum for each node once. This is plus the DAG (d) is how we get the speedup.
     </p>
     <p>(You may have expected recursion, but we don't need recursion for 
         dynamic programming.)
     </p>
-<a href="./grasshopper_3.html">Let's go solve! Click here.</a>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<a href="./grasshopper_3.html">Let's go solve! Click here to see the algorithm in action.</a>
+<p><br><br><br><br></p>
+
 </body>
 
 </html>
