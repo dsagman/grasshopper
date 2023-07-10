@@ -14,6 +14,7 @@ function clearSVG(id) {
 
 async function animateDrawPathLog(seq, pathLog, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default', tDelay = 10) {
   // animate the solving algorithm for primeGrasshopper
+  console.log(pathLog);
   for (let i = 0; i < pathLog.length; i++) {
     await animateDrawGraph(seq, pathLog[i], edgeMethod, id, showEnd, goalSum, style, tDelay)
   }

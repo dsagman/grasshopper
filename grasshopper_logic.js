@@ -108,7 +108,8 @@ function max_path(d, seq) {
           max_val = max_sum[next_node];
           max_node = next_node;
         }
-        pathLog.push([node, max_node]);
+          pathLog.push([node, max_node]);
+        
       }
       max_sum[node] = max_val + seq[node];
       best_path[node] = [node].concat(best_path[max_node]);
@@ -116,14 +117,21 @@ function max_path(d, seq) {
     }
   }
 
+  //dedupe pathLog
+  // pathLog is traces the execution of the max_path function
+  let dedupPathLog = pathLog.reduce((acc, val) => {
+    let valStr = JSON.stringify(val);
+    let lastValStr = acc.length > 0 ? JSON.stringify(acc[acc.length - 1]) : null;
+    if (valStr !== lastValStr) {
+      acc.push(val);
+    }
+    return acc;
+  }, []);
+
   let max_sum_start = Math.max(...max_sum);  // maximum sum among all starting nodes
   let start_node = max_sum.indexOf(max_sum_start);  // starting node for the maximum sum
   let path = best_path[start_node];  // path corresponding to the maximum sum
-  // console.log("Inside The maximum sum is " + max_sum_start);
-  // console.log("Inside The path is " + path);
-  // console.log("best path is " + best_path);
-  // console.log("max sum is " + max_sum);
-  return [max_sum_start, path, pathLog];
+  return [max_sum_start, path, dedupPathLog];
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 function prime_grasshopper(seq) {
