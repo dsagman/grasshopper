@@ -12,10 +12,10 @@ function clearSVG(id) {
   svg.selectAll("*").remove();
 }
 
-function animateDrawPathLog(seq, pathLog, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default', tDelay = 10) {
+async function animateDrawPathLog(seq, pathLog, edgeMethod = "path", id, showEnd = false, goalSum, style = 'default', tDelay = 10) {
   // animate the solving algorithm for primeGrasshopper
   for (let i = 0; i < pathLog.length; i++) {
-    animateDrawGraph(seq, pathLog[i], edgeMethod, id, showEnd, goalSum, style, tDelay)
+    await animateDrawGraph(seq, pathLog[i], edgeMethod, id, showEnd, goalSum, style, tDelay)
   }
 }
 
